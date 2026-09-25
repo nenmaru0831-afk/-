@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <title>統都異象記 — Title</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="maint-gate" id="maintGate" hidden>
+    <p>カナリアが夢界と画面の接続を点検中</p>
+    <span>午前３時から午前６時までプレイ不可</span>
+  </div>
+  <div class="device-gate" id="deviceGate">
+    <div class="gate-card">
+      <p class="gate-emblem">夢界CONCEPT</p>
+      <h2>統都異象記</h2>
+      <p class="gate-lead">器を選んで、夜へ降りてください</p>
+      <div class="gate-row">
+        <button type="button" data-dev="pc"><b>パソコン</b><small>鍵盤と鼠</small></button>
+        <button type="button" data-dev="phone"><b>スマホ</b><small>横画面・指</small></button>
+      </div>
+    </div>
+  </div>
+  <div class="stage is-intro">
+    <div class="sky"></div>
+    <div class="moon" aria-hidden="true"></div>
+    <canvas id="fx"></canvas>
+    <div class="ground-glow"></div>
+    <div class="vignette"></div>
+    <div class="intro-veil" aria-hidden="true">
+      <span class="curtain curtain-l"></span>
+      <span class="curtain curtain-r"></span>
+    </div>
+    <div class="intro-sweep" aria-hidden="true"></div>
+
+    <div class="panel">
+      <p class="emblem">夢界CONCEPT</p>
+      <h1 class="title">
+        <span class="jp">統都異象記</span>
+        <span class="en">COISC AN SMACHT</span>
+      </h1>
+      <div class="divider" aria-hidden="true">
+        <span class="pip"></span>
+        <span class="line"></span>
+      </div>
+      <p class="tagline">製作 NEN</p>
+
+      <nav class="menu" aria-label="タイトルメニュー">
+        <button type="button" data-action="start" class="active">スタート</button>
+        <button type="button" data-action="continue" id="continueBtn" hidden>続きからスタート</button>
+        <button type="button" data-action="settings">設定</button>
+        <button type="button" data-action="guideline">二次創作ガイドライン</button>
+        <button type="button" data-action="achieve">実績</button>
+      </nav>
+      <p class="hint">↑↓ で選択　　Enter で決定</p>
+    </div>
+
+    <button type="button" class="title-amase" id="titleAmase" aria-label="天瀬 若葉">
+      <img src="assets/images/chars/amase_title.webp" alt="天瀬 若葉" />
+      <span class="title-bubble" id="titleBubble" hidden></span>
+    </button>
+    <div class="ember-layer" aria-hidden="true"></div>
+    <div class="fx-layer" id="fxLayer"></div>
+    <div class="sns">
+      <span class="sns-comment" title="緋月邸正門掲示板" aria-label="掲示板">
+        <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="currentColor" d="M4 4h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H9l-5 4v-4H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/></svg>
+      </span>
+      <span class="sns-news" title="統都晩報" aria-label="新聞記事">
+        <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="currentColor" d="M4 5h12a1 1 0 0 1 1 1v11h2V8h1v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a1 1 0 0 1 1-1zm2 3v2h8V8H6zm0 4v2h5v-2H6z"/></svg>
+      </span>
+      <a class="sns-yt" href="https://www.youtube.com/@NEN_Mukai" target="_blank" rel="noopener noreferrer" title="YouTube" aria-label="YouTube">
+        <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path fill="currentColor" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.8 15.5V8.5L16 12z"/></svg>
+      </a>
+    </div>
+
+    <div class="title-trick" id="titleTrick" hidden></div>
+    <div class="paper-sheet" id="newsSheet" hidden>
+      <button type="button" class="sheet-close" data-close="newsSheet">閉じる</button>
+      <header class="paper-head">
+        <p class="paper-price">夕刊　十二文</p>
+        <h1>統都晩報</h1>
+        <p class="paper-date">二〇二六年十月三十一日　土曜日　／　発行部数千二百</p>
+      </header>
+      <p class="paper-rule">天候　快晴のち霧　　市況　灯油高　　異象注意報　発令中</p>
+      <div class="paper-grid">
+        <article>
+          <h2>列、館へ</h2>
+          <p class="paper-lead">都の西へ人が続く。握手会とだけ告げられた。</p>
+        </article>
+        <article>
+          <h2>屋上の灯</h2>
+          <p>館の屋上に灯が一つ残る。</p>
+          <h2>南瓜の少女</h2>
+          <p>教会付近で、今夜限りの約束を口にする者が出没。</p>
+        </article>
+      </div>
+      <p class="paper-foot">第一面　社会　／　発行　統都晩報社　／　第一作「統華異象」　十月三十一日公開</p>
+    </div>
+    <div class="comment-sheet" id="commentSheet" hidden>
+      <button type="button" class="sheet-close" data-close="commentSheet">閉じる</button>
+      <h2>緋月邸正門掲示板</h2>
+      <p class="board-meta" id="boardMeta">接続中　・　名無しでも書き込める</p>
+      <p class="board-offline" id="boardOffline" hidden>オフラインなので遊べません</p>
+      <ul class="comment-list" id="commentList"></ul>
+      <form class="comment-form" id="commentForm">
+        <input type="text" id="commentName" maxlength="12" placeholder="名前" autocomplete="off" />
+        <input type="text" id="commentInput" maxlength="80" placeholder="本文" autocomplete="off" />
+        <button type="submit">書き込む</button>
+      </form>
+    </div>
+    <footer class="ver">第一作「統華異象　・　２０２６年１０月３１日公開」</footer>
+
+    <div class="vn" id="vn" hidden>
+      <div class="vn-bg"></div>
+      <div class="vn-sprites" id="vnSprites"></div>
+      <div class="battle-track" id="battleTrack" hidden>
+        <span class="track-mark">♪</span>
+        <span class="track-meta">
+          <small id="battleTrackWho">テーマ曲</small>
+          <b id="battleTrackName"></b>
+        </span>
+      </div>
+      <div class="vn-intro" id="vnIntro" hidden>
+        <span class="intro-veil-bg"></span>
+        <span class="intro-bar"></span>
+        <span id="vnIntroAlias"></span>
+        <strong id="vnIntroName"></strong>
+      </div>
+      <div class="vn-banner" id="vnBanner" hidden>
+        <p class="vn-banner-label" id="vnBannerLabel"></p>
+        <p class="vn-banner-note" id="vnBannerNote"></p>
+        <p class="vn-banner-hint">クリックで進む</p>
+      </div>
+      <div class="vn-battle" id="vnBattle" hidden>
+        <div class="battle-veil" id="battleVeil" hidden></div>
+        <div class="battle-hud">
+          <span id="battleWave">BOSS</span>
+          <span id="battleMsg"></span>
+          <span id="battleLives"></span>
+        </div>
+        <div class="battle-hp" id="battleHpBox">
+          <span id="battleHpText">体力 300/300</span>
+          <span class="battle-hp-track"><i id="battleHpFill"></i></span>
+        </div>
+        <button type="button" class="battle-pause-btn" id="battlePauseBtn" hidden aria-label="一時停止">❚❚</button>
+        <div class="battle-timer" id="battleTimer" hidden>3:00</div>
+        <div class="battle-score" id="battleScore">SCORE 0</div>
+        <ul class="battle-status" id="battleStatus" hidden></ul>
+        <div class="battle-join" id="battleJoin" hidden>
+          <div class="battle-join-plate">
+            <p class="battle-join-name" id="joinName"></p>
+            <p class="battle-join-text" id="joinText"></p>
+          </div>
+        </div>
+        <div class="battle-join-anim" id="battleJoinAnim" hidden>
+          <span class="join-flash"></span>
+          <span class="join-ring"></span>
+          <span class="join-slash"></span>
+          <span class="join-slash join-slash-2"></span>
+          <p>永視参戦</p>
+        </div>
+        <div class="battle-count" id="battleCount" hidden>3</div>
+        <div class="battle-pause" id="battlePause" hidden>
+          <p>一時停止</p>
+          <p class="pause-sub" id="pauseSub"></p>
+          <button type="button" id="pauseResume">ゲームを続ける</button>
+          <button type="button" id="pauseSettings">設定</button>
+          <button type="button" id="pauseRetry">この戦闘からやり直す</button>
+          <button type="button" id="pauseTitle">タイトルに戻る</button>
+        </div>
+        <div class="battle-intro" id="battleIntro" hidden>
+          <span class="intro-flash"></span>
+          <span class="intro-mark"></span>
+          <span class="intro-ring"></span>
+          <span class="intro-glow"></span>
+          <p class="intro-sub">交戦</p>
+          <p class="intro-vs">VS</p>
+          <p class="intro-name" id="battleIntroName"></p>
+        </div>
+        <div class="battle-outro" id="battleOutro" hidden>
+          <span class="outro-flash"></span>
+          <p class="outro-word" id="battleOutroWord">退散成功</p>
+        </div>
+        <canvas id="battleCanvas"></canvas>
+        <div class="battle-cutin" id="battleCutin" hidden>
+          <img id="battleCutinImg" alt="" />
+        </div>
+        <p class="battle-announce" id="battleAnnounce" hidden></p>
+        <div class="battle-cast" id="battleCast" hidden>
+          <span class="cast-ring"></span>
+          <span class="cast-ring cast-ring-2"></span>
+          <span class="cast-slash"></span>
+          <span class="cast-slash cast-slash-2"></span>
+          <span class="cast-glow"></span>
+        </div>
+        <div class="skill-bar" id="skillBar">
+          <span data-sk="s0"><em data-cd></em><b>1</b> 隠れている者は誰？</span>
+          <span data-sk="s1"><em data-cd></em><b>2</b> 選ばれた貴方に。</span>
+          <span data-sk="s2"><em data-cd></em><b>3</b> 無干渉ワード</span>
+        </div>
+        <div class="battle-over" id="battleOver" hidden>
+          <p>ゲームオーバー</p>
+          <span>制限時間を超えました<br><b id="overTick">残り10秒でタイトル画面に戻ります</b></span>
+          <button type="button" id="battleRetry">やり直す</button>
+          <button type="button" id="battleTitle">タイトルへ</button>
+        </div>
+      </div>
+      <div class="vn-ui" id="vnUi">
+        <div class="vn-name" id="vnName"></div>
+        <div class="vn-text" id="vnText"></div>
+        <div class="vn-log" id="vnLog" hidden></div>
+        <p class="vn-hint" hidden></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="touch-move" id="touchMove" hidden>
+    <button type="button" data-touch="left">←</button>
+    <button type="button" data-touch="right">→</button>
+  </div>
+  <div class="touch-shot" id="touchShot" hidden>
+    <button type="button" data-touch="shot">攻撃</button>
+  </div>
+  <div class="touch-skills" id="touchSkills" hidden>
+    <button type="button" data-touch="s0">1</button>
+    <button type="button" data-touch="s1">2</button>
+    <button type="button" data-touch="s2">3</button>
+  </div>
+
+  <div class="overlay" id="overlay" role="dialog" aria-modal="true">
+    <div class="card">
+      <h2 id="dialogTitle">お知らせ</h2>
+      <div id="dialogBody"></div>
+      <button type="button" class="close" id="dialogClose">閉じる</button>
+    </div>
+  </div>
+
+  <article id="guideline-source" hidden>
+    <p class="lead">本ガイドラインは、『夢界CONCEPT』（以下「本作」）に関する二次創作活動の方針を定めるものです。本作を応援してくださる皆様の創作活動を尊重し、最大限自由に楽しんでいただくことを目的としています。</p>
+    <h3>1. 基本方針（原則すべて自由）</h3>
+    <p>本作に関する二次創作活動は、原則としてすべて自由です。事前の申請、許諾、ライセンス料等は一切必要ありません。個人・同人の範囲であれば、商用利用（販売・広告収益・アプリ内課金等）の年間売上上限もありません。</p>
+    <p>【自由な創作範囲の例】イラスト／漫画／小説／音楽／動画／配信／コスプレ／同人誌／同人グッズ／二次創作ゲーム／アプリ／過去改変／設定改変／解釈違い／パラレル／IF展開／オリジナル衣装／AI画像・AI音声・AI動画の生成（ただし、公式素材を直接読み込ませる抽出学習は禁止）</p>
+    <h3>2. 必須事項（最低限のお願い）</h3>
+    <p>すべての二次創作作品において、「本作の二次創作であること」を明記してください。記載場所は任意です（奥付・概要欄・商品ページ・タイトル画面等）。例：本作品は『夢界CONCEPT』の二次創作です。</p>
+    <p>本作のエンディング内容を含む作品を公開する場合は、サムネイル・タイトル・概要欄等のいずれかに「ネタバレあり」と明記してください。</p>
+    <h3>3. 禁止事項（最低限のライン）</h3>
+    <ul>
+      <li>公式データの抽出・再配布。ゲーム内の画像・音楽・ボイス・文章などをファイルとして抜き出し、素材として利用・配布・転載する行為。</li>
+      <li>公式と誤認させる表現。「公式監修」「公式商品」など、公式と完全に同一であるかのような虚偽・誤認を招く表現。</li>
+      <li>公序良俗に反する利用。極端な差別表現、犯罪助長、政治・宗教活動への利用、情報商材での利用。</li>
+      <li>特定の個人・団体への攻撃目的での利用、または他者の著作権・商標などを侵害する行為。</li>
+    </ul>
+    <h3>4. 原作者の権限について</h3>
+    <p>本作のブランドおよび世界観の保護のため、原作者は以下の権限を有します。</p>
+    <p>原作ゲーム制作の独占権：本作の「公式続編」や「公式設定」を名乗る作品を制作できるのは原作者のみです。</p>
+    <p>利用停止・修正・削除の要請権：ガイドライン違反、またはブランド毀損の恐れがあると原作者が判断した二次創作に対し、公開停止や削除を要請する場合があります（要請があった場合は、速やかな対応をお願いいたします）。</p>
+    <h3>5. 企業・法人の方</h3>
+    <p>企業や法人が商業目的で本作の二次創作を行う場合は、事前に必ずお問い合わせフォームよりご連絡ください。</p>
+    <h3>6. 免責事項</h3>
+    <p>二次創作活動に伴うトラブル・損害について、原作者および開発者は一切の責任を負いかねます。原作者が不適切と判断した場合、ガイドラインの範囲内であっても公開停止をお願いすることがあります。本ガイドラインは予告なく変更されることがあります。最新情報は公式SNSや公式サイトをご確認ください。</p>
+    <h3>7. お問い合わせ</h3>
+    <p>アプリストアの審査等で公式の許可証明（承諾書など）が必要な場合や、ガイドラインに関するご質問は、お問い合わせフォームよりご連絡ください。</p>
+  </article>
+
+
+  <div class="shop-sheet" id="shopSheet" hidden>
+    <header>
+      <h2>小望魔法商店</h2>
+      <b id="shopGold">所持金　1000</b>
+    </header>
+    <div class="shop-grid" id="shopGrid"></div>
+    <button type="button" id="shopDone">選び終わった</button>
+  </div>
+  <div class="bag-bar" id="bagBar" hidden></div>
+    <div class="achieve-sheet" id="achieveSheet" hidden>
+    <button type="button" class="sheet-close" data-close="achieveSheet">閉じる</button>
+    <h2>実績</h2>
+    <p id="achieveMeta">0 / 30</p>
+    <ul id="achieveList"></ul>
+  </div>
+  <div class="help-sheet" id="helpSheet" hidden>
+    <button type="button" class="sheet-close" data-close="helpSheet">閉じる</button>
+    <h2>操作</h2>
+    <p>標題　↑↓／Enter</p>
+    <p>会話　クリック／Enter／Space　履歴 L　早送り Ctrl</p>
+    <p>戦闘　←→ 移動　Shift 慎重　Space 射撃　1 2 3 技</p>
+    <p>戦闘　4〜9 持っている品　Esc 停止　H 札を薄く　R やり直し</p>
+  </div>
+  <div class="toast" id="toast" hidden></div>
+  <script src="js/settings.js"></script>
+  <script src="js/battle.js"></script>
+  <script src="js/achieve.js"></script>
+  <script src="js/shop.js"></script>
+  <script src="js/story.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    if (location.protocol !== "file:" && "serviceWorker" in navigator) {
+      navigator.serviceWorker.register("sw.js").catch(function () {});
+    }
+  </script>
+</body>
+</html>
